@@ -14,17 +14,29 @@ function template(strings, ...keys) {
 }
 
 // templates for different types of Annotations
-const highlighted = template`> ${'highlightedText'}
+//const highlighted = template`> ${'highlightedText'}
+//
+//${'body'}
+//			    
+//* *highlighted by ${'author'} at page ${'pageNumber'} on [[${'filepath'}]]*
+//
+//`
 
-${'body'}
-			    
-* *highlighted by ${'author'} at page ${'pageNumber'} on [[${'filepath'}]]*
+const highlighted = template`> [!CITE]${'highlightedText'}
+> _page ${'pageNumber'}_
+> ${'body'}
 
 `
 
-const note = template`${'body'}
-  
-* *noted by ${'author'} at page ${'pageNumber'} on [[${'filepath'}]]*
+//const note = template`${'body'}
+// 
+//* *noted by ${'author'} at page ${'pageNumber'} on [[${'filepath'}]]*
+//
+//`
+
+const note = template`> [!NOTE]
+> _page ${'pageNumber'}_
+> ${'body'}
 
 `
 
@@ -97,7 +109,11 @@ export default class PDFAnnotationPlugin extends Plugin {
 			} else {
 				if (currentFolder != a.file.name) {
 					currentFolder = a.file.name
-					text += `## ${currentFolder}\n`
+					text += `# ${currentFolder}\n`
+					text += `[[`
+					text += a.file.path
+					text += `]]\n\n`
+					
 				}  
 			}
 
@@ -120,9 +136,9 @@ export default class PDFAnnotationPlugin extends Plugin {
 		await loadPDFFile(file, pdfjsLib, containingFolder, grandtotal)
 		this.sort(grandtotal)
 		const finalMarkdown = this.format(grandtotal)
-
-		let filePath = file.name.replace(".pdf", ".md");
-		filePath = "Annotations for " + filePath;
+// instead of the root of the vault, save next to the pdf itself with file.path
+		let filePath = file.path.replace(".pdf", ".annotations.md");
+//		filePath = containingFolder + "/Annotations for " + filePath;
 		await this.saveHighlightsToFile(filePath, finalMarkdown);
 		await this.app.workspace.openLinkText(filePath, '', true);						
 	}
