@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-extract-pdf-annotations",
-	"name": "Extract PDF Annotations",
-	"version": "1.0.4",
+	"id": "annotation callouts",
+	"name": "PDF Annotation Callouts",
+	"version": "1.0.0",
 	"minAppVersion": "0.12.0",
-	"description": "Extract PDF Annotations (Notes and Highlights) and sort them by topics",
-	"author": "Franz Achermann",
-	"authorUrl": "https://github.com/munach/obsidian-extract-pdf-annotations",
+	"description": "Extract PDF Annotations into callouts",
+	"author": "Kevin Newman",
+	"authorUrl": "https://github.com/owldown/obsidian-extract-pdf-annotations",
 	"isDesktopOnly": false
 }
